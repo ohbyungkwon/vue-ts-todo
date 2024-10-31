@@ -1,28 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <todo-header></todo-header>
+    <router-view></router-view>
+    <todo-footer @delTodoList="delTodoList"></todo-footer>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import TodoHeader from './components/TodoHeader.vue';
+import TodoFooter from './components/TodoFooter.vue';
+import { Action } from 'vuex-class';
 
-export default {
+@Component({
   name: 'App',
   components: {
-    HelloWorld
+    TodoHeader,
+    TodoFooter
+  }
+})
+export default class App extends Vue {
+  @Action('delTodoListAct') private delTodoListAct!:() => void
+
+  private delTodoList() {
+    this.delTodoListAct();
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
