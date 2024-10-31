@@ -18,7 +18,10 @@ export default class TodoHeader extends Vue {
     private menus:string[] = ['TODO', 'HOME', 'ABOUT'];
 
     private clickMenu(menu:string) {
-        this.$emit('clickMenu', menu.toLowerCase());
+        const menuNameLower = menu.toLowerCase();
+        const isSameMove = this.$route.fullPath === '/' + menuNameLower;
+        if(!isSameMove)
+            this.$emit('clickMenu', menuNameLower);
     }
 }
 </script>
