@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <todo-header></todo-header>
+    <todo-header @clickMenu="clickMenu"></todo-header>
     <router-view></router-view>
     <todo-footer @delTodoList="delTodoList"></todo-footer>
   </div>
@@ -26,6 +26,11 @@ export default class App extends Vue {
   private delTodoList() {
     this.delTodoListAct();
   }
+
+  private clickMenu(menu: string) {
+    this.$router.push(menu);
+  }
+
 }
 </script>
 

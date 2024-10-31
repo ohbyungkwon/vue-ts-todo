@@ -22,6 +22,9 @@ const store: StoreOptions<RootStore> = {
     storedTodoList: []    
   },
   mutations: {
+    initStoredTodoList: function(state) {
+      state.storedTodoList = [];
+    },
     initTodoItem: function(state, todoItemStr:string) {
       state.storedTodoList.push(JSON.parse(todoItemStr));
     },
@@ -39,6 +42,7 @@ const store: StoreOptions<RootStore> = {
       const idxStr = idx.toString();
       localStorage.removeItem(idxStr);
 
+      //api 탄다면 불필요
       const changedItem = JSON.stringify(state.storedTodoList[idx]);
       localStorage.setItem(idxStr, changedItem);
     },
@@ -74,6 +78,7 @@ const store: StoreOptions<RootStore> = {
       }, 1000);
     },
     searchTodoList: function({commit}) {
+      commit('initStoredTodoList');
       const size = localStorage.length;
       for(let i = 0; i < size; i++) {
         const key = localStorage.key(i);
