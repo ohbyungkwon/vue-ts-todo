@@ -15,7 +15,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { TodoVo } from '../store';
+import { TodoVo } from '@/vo/TodoVo';
 
 @Component({
     name: 'TodoList'

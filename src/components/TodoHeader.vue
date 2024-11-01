@@ -13,7 +13,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Component from 'vue-class-component';
 
+@Component({
+    name: 'TodoHeader'
+})
 export default class TodoHeader extends Vue {
     private menus:string[] = ['TODO', 'HOME', 'ABOUT'];
 
@@ -49,7 +53,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #333;
+    background-color: rgb(84, 135, 186);
     padding: 1rem 2rem;
 }
 
@@ -81,7 +85,7 @@ body {
 
 /* 메뉴 항목 hover 효과 */
 .navbar ul li a:hover {
-    background-color: #555;
+    background-color: rgb(159, 192, 225);;
     border-radius: 5px;
 }
 </style>

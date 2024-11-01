@@ -4,34 +4,43 @@
     <span class="addContainer" @click="addTodo">
       <i class="addBtn fas fa-plus" aria-hidden="true"></i>
     </span>
+    <status-modal ref="modalRef" :vo="modal" @close="clearInput"></status-modal>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { TodoVo } from '../store';
+import { TodoVo } from '@/vo/TodoVo';
 import Component from 'vue-class-component';
 import _ from 'lodash';
 import { Getter } from 'vuex-class';
+import StatusModal from './common/StatusModal.vue';
+import { ModalVo } from '@/vo/ModalVo';
 
 @Component({
-    name: 'TodoInput'
+    name: 'TodoInput',
+    components: {
+      StatusModal
+    }
 })
 export default class TodoInput extends Vue {
   @Getter('getTodoItemIdx') private getTodoItemIdx!:(text:string) => number;
 
   private newTodoItemForm:TodoVo = new TodoVo({ text: '', done: false });
+  private modal:ModalVo = new ModalVo({});
 
   private addTodo() {
     let text = this.newTodoItemForm.text;
     if(text === '') {
-      alert('빈값은 입력할 수 없습니다.');
+      this.modal = new ModalVo({ status: 'warning', title: '경고', content: '빈 값은 입력할 수 없습니다.'});
+      (this.$refs.modalRef as any).open();
       return;
     }
     
     const idx = this.getTodoItemIdx(text);
     if(idx >= 0) {
-      alert('이미 존재하는 값입니다.');
+      this.modal = new ModalVo({ status: 'error', title: '오류', content: '이미 존재하는 값입니다.'});
+      (this.$refs.modalRef as any).open();
       return;
     }
     

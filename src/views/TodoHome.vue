@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :isShowLoading="loading"></loading>
     <todo-input @addTodoItem=addTodoItem></todo-input>
     <todo-list 
       :lists="storedTodoList"
@@ -10,9 +11,10 @@
 </template>
 
 <script lang="ts">
+import Loading from '@/components/common/Loading.vue';
 import TodoInput from '@/components/TodoInput.vue';
 import TodoList from '@/components/TodoList.vue';
-import { TodoVo } from '../store';
+import { TodoVo } from '@/vo/TodoVo';
 import Vue from 'vue';
 import Component from 'vue-class-component'
 import { State, Action, Mutation } from 'vuex-class';
@@ -21,11 +23,13 @@ import { State, Action, Mutation } from 'vuex-class';
     name: 'TodoHome',
     components: {
         TodoInput,
-        TodoList
+        TodoList,
+        Loading
     }
 })
 export default class TodoHome extends Vue {
   @State('storedTodoList') private storedTodoList!:TodoVo[];
+  @State('loading') private loading!:boolean;
 
   @Mutation('toggleCompleteTodoItem') private toggleCompleteTodoItem!:(idx:number) => void
   @Action('addTodoItemAct') private addTodoItemAct!: (todoItem: TodoVo) => void
