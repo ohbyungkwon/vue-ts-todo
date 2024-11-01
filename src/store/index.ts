@@ -1,3 +1,4 @@
+import LocalStorageUtil from '@/utils/LocalStorageUtil';
 import Vue from 'vue'
 import Vuex, { StoreOptions } from 'vuex'
 
@@ -22,71 +23,47 @@ const store: StoreOptions<RootStore> = {
     storedTodoList: []    
   },
   mutations: {
-    initStoredTodoList: function(state) {
-      state.storedTodoList = [];
-    },
     initTodoItem: function(state, todoItemStr:string) {
       state.storedTodoList.push(JSON.parse(todoItemStr));
     },
     addTodoItem: function(state, todoItem:TodoVo) {
-      //api 탄다면 불필요
-      const idxStr = state.storedTodoList.length.toString();
-      localStorage.setItem(idxStr, JSON.stringify(todoItem));
-
       state.storedTodoList.push(todoItem);
     },
     toggleCompleteTodoItem: function(state, idx:number) {
       state.storedTodoList[idx].done = !state.storedTodoList[idx].done
 
-      //api 탄다면 불필요
-      const idxStr = idx.toString();
-      localStorage.removeItem(idxStr);
-
-      //api 탄다면 불필요
-      const changedItem = JSON.stringify(state.storedTodoList[idx]);
-      localStorage.setItem(idxStr, changedItem);
+      LocalStorageUtil.changeItem(idx, state.storedTodoList[idx]);
     },
     delTodoItem: function(state, idx:number) {
       state.storedTodoList.splice(idx, 1);
-
-      //api 탄다면 불필요
-      const idxStr = idx.toString();
-      localStorage.removeItem(idxStr);
     },
     delTodoList: function(state) {
       state.storedTodoList = [];
-
-      //api 탄다면 불필요
-      localStorage.clear();
     }
   },
   actions: {
     addTodoItemAct: function({commit}, todoItem:TodoVo){
       setTimeout(() => {
-        console.log(todoItem);
+        LocalStorageUtil.setItem(LocalStorageUtil.autoKey, todoItem);
         commit('addTodoItem', todoItem);
       }, 1000);
     },
     delTodoItemAct: function({commit}, idx:number){
       setTimeout(() => {
+        LocalStorageUtil.removeItem(idx);
         commit('delTodoItem', idx);
       }, 1000);
     },
     delTodoListAct: function({commit}){
       setTimeout(() => {
+        LocalStorageUtil.clear();
         commit('delTodoList');
       }, 1000);
     },
     searchTodoList: function({commit}) {
-      commit('initStoredTodoList');
-      const size = localStorage.length;
-      for(let i = 0; i < size; i++) {
-        const key = localStorage.key(i);
-        if(key === null) break;
-
-        const item = localStorage.getItem(key);
-        commit('initTodoItem', item);
-      }
+      commit('delTodoList'); // 기존 리스트 비움
+      const todoList = LocalStorageUtil.searchAll();
+      todoList.forEach(item => commit('addTodoItem', item))
     }
   },
   getters: {
