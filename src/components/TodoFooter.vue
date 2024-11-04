@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div v-if="isBtnShow" class="clearAllContainer">
         <span class="clearAllBtn" @click="delTodoList">Clear All</span>
     </div>
@@ -7,17 +7,20 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { Action } from 'vuex-class';
 
 @Component({
     name: 'TodoFooter'
 })
 export default class TodoFooter extends Vue {
+    @Action('delTodoListAct') private delTodoListAct!:() => void
+
     get isBtnShow() {
         return ['/todo', '/'].includes(this.$route.fullPath)
     }
 
     private delTodoList() {
-        this.$emit('delTodoList');
+        this.delTodoListAct();
     }
 }
 </script>

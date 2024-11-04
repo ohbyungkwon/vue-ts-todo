@@ -13,9 +13,10 @@ import Vue from 'vue';
 import { TodoVo } from '@/vo/TodoVo';
 import Component from 'vue-class-component';
 import _ from 'lodash';
-import { Getter } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 import StatusModal from './common/StatusModal.vue';
 import { ModalVo } from '@/vo/ModalVo';
+import { ResponseVo } from '@/vo/ResponseVo';
 
 @Component({
     name: 'TodoInput',
@@ -25,21 +26,24 @@ import { ModalVo } from '@/vo/ModalVo';
 })
 export default class TodoInput extends Vue {
   @Getter('getTodoItemIdx') private getTodoItemIdx!:(text:string) => number;
+  @Action('addTodoItemAct') private addTodoItemAct!: (todoItem: TodoVo) => void
+  @Action('addTodoApiTest') private addTodoApiTest!: (todoItem: TodoVo) => any
 
   private newTodoItemForm:TodoVo = new TodoVo({ text: '', done: false });
   private modal:ModalVo = new ModalVo({});
 
   private addTodo() {
+
     let text = this.newTodoItemForm.text;
     if(text === '') {
-      this.modal = new ModalVo({ status: 'warning', title: '경고', content: '빈 값은 입력할 수 없습니다.'});
+      this.modal = new ModalVo({ status: 'warning', content: '빈 값은 입력할 수 없습니다.'});
       (this.$refs.modalRef as any).open();
       return;
     }
     
     const idx = this.getTodoItemIdx(text);
     if(idx >= 0) {
-      this.modal = new ModalVo({ status: 'error', title: '오류', content: '이미 존재하는 값입니다.'});
+      this.modal = new ModalVo({ status: 'error', content: '이미 존재하는 값입니다.'});
       (this.$refs.modalRef as any).open();
       return;
     }
@@ -47,7 +51,33 @@ export default class TodoInput extends Vue {
     const newTodoItem = _.cloneDeep(this.newTodoItemForm);
     console.log("Add TodoItem: ", newTodoItem);
 
-    this.$emit('addTodoItem', newTodoItem);
+    this.addTodoItemAct(newTodoItem);
+
+    this.clearInput();
+  }
+
+  private async addTodoUsingApi() {
+    let text = this.newTodoItemForm.text;
+    if(text === '') {
+      this.modal = new ModalVo({ status: 'warning', content: '빈 값은 입력할 수 없습니다.'});
+      (this.$refs.modalRef as any).open();
+      return;
+    }
+    
+    const idx = this.getTodoItemIdx(text);
+    if(idx >= 0) {
+      this.modal = new ModalVo({ status: 'error', content: '이미 존재하는 값입니다.'});
+      (this.$refs.modalRef as any).open();
+      return;
+    }
+    
+    const newTodoItem = _.cloneDeep(this.newTodoItemForm);
+    console.log("Add TodoItem: ", newTodoItem);
+
+    const result:ResponseVo = await this.addTodoApiTest(newTodoItem);
+    this.modal = new ModalVo({ status: result.status, content: result.message});
+    (this.$refs.modalRef as any).open();
+      
     this.clearInput();
   }
 

@@ -8,13 +8,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { State } from 'vuex-class';
 
 @Component({
     name: 'Loading'
 })
-export default class Loading extends Vue {
-    @Prop() private readonly isShowLoading!:boolean;
+export default class Loading extends Vue { 
+    @State('loading') private isShowLoading!:boolean;
 }
 </script>
 

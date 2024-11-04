@@ -1,5 +1,4 @@
-class LocalStorageUtil {
-    static autoKey:string = localStorage.length.toString();
+export default class LocalStorageUtil {
     
     static setItem(key:any, value:any): void {
         let item:any = null;
@@ -8,7 +7,7 @@ class LocalStorageUtil {
         } else {
             item = value.toString();
         }
-
+        if(!key) key = localStorage.length;
         localStorage.setItem(LocalStorageUtil.convertString(key), item);            
     }
 
@@ -39,6 +38,10 @@ class LocalStorageUtil {
         return value.toString();
     }
 
+    static getAutoKey(): number{
+        return localStorage.length;
+    }
+
     static searchAll():any[] {
         const list = [];
         const size = localStorage.length;
@@ -55,4 +58,3 @@ class LocalStorageUtil {
         return list;
     }
 }
-export default LocalStorageUtil;

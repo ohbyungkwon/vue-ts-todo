@@ -1,4 +1,6 @@
+import Axios from '@/utils/Axois';
 import LocalStorageUtil from '@/utils/LocalStorageUtil';
+import { ResponseVo } from '@/vo/ResponseVo';
 import { TodoVo } from '@/vo/TodoVo';
 import Vue from 'vue'
 import Vuex, { StoreOptions } from 'vuex'
@@ -40,7 +42,7 @@ const store: StoreOptions<RootStore> = {
       commit('setLoading', true);
 
       setTimeout(() => {
-        LocalStorageUtil.setItem(LocalStorageUtil.autoKey, todoItem);
+        LocalStorageUtil.setItem(LocalStorageUtil.getAutoKey(), todoItem);
         commit('addTodoItem', todoItem);
 
         commit('setLoading', false);
@@ -76,6 +78,28 @@ const store: StoreOptions<RootStore> = {
 
         commit('setLoading', false);
       }, 500);
+
+    },
+    addTodoApiTest: async function({commit}, reqBody) {
+      commit('setLoading', true);
+
+      let result = undefined;
+      try{
+        const response = await Axios.getInstance().post('/todo', reqBody);
+        commit('addTodoItem', response.data);   
+
+        result = response.data;
+      } catch(error:any) {
+        if(error.response) {
+          result = error.response.data;
+        } else {
+          result = { status: '오류', message: error.message, code: 500 };     
+        }
+      } finally {
+        commit('setLoading', false);
+      }
+
+      return new ResponseVo(result);
     }
   },
   getters: {

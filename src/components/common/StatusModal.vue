@@ -4,7 +4,7 @@
         <!-- 모달 본문 -->
         <div :class="['modal', statusClass]">
             <span class="close-btn" @click="close">&times;</span>
-            <h2>{{ vo.title }}</h2>
+            <h2>{{ title }}</h2>
             <p>{{ vo.content }}</p>
             <button @click="close">{{ vo.btnMsg }}</button>
         </div>
@@ -32,6 +32,17 @@ export default class StatusModal extends Vue {
             return 'modal-warning';
         default:
             return 'modal-default';
+        }
+    }
+
+    get title() {
+        switch (this.vo.status) {
+        case 'error':
+            return '오류';
+        case 'warning':
+            return '경고';
+        default:
+            return '알림';
         }
     }
 

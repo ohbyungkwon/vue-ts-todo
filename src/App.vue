@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <todo-header @clickMenu="clickMenu"></todo-header>
+    <todo-header></todo-header>
     <router-view></router-view>
-    <todo-footer @delTodoList="delTodoList"></todo-footer>
+    <todo-footer></todo-footer>
   </div>
 </template>
 
@@ -11,7 +11,6 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import TodoHeader from './components/TodoHeader.vue';
 import TodoFooter from './components/TodoFooter.vue';
-import { Action } from 'vuex-class';
 
 @Component({
   name: 'App',
@@ -21,15 +20,6 @@ import { Action } from 'vuex-class';
   }
 })
 export default class App extends Vue {
-  @Action('delTodoListAct') private delTodoListAct!:() => void
-
-  private delTodoList() {
-    this.delTodoListAct();
-  }
-
-  private clickMenu(menu: string) {
-    this.$router.push(menu);
-  }
 
 }
 </script>

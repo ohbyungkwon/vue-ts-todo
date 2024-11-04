@@ -25,7 +25,7 @@ export default class TodoHeader extends Vue {
         const menuNameLower = menu.toLowerCase();
         const isSameMove = this.$route.fullPath === '/' + menuNameLower;
         if(!isSameMove)
-            this.$emit('clickMenu', menuNameLower);
+            this.$router.push(menuNameLower);
     }
 }
 </script>
