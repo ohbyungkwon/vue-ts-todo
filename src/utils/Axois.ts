@@ -29,6 +29,7 @@ export default class Axios {
                     config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token');
                 }
 
+                config.withCredentials = true;
                 return config;
             },
             (error) => {
@@ -40,13 +41,12 @@ export default class Axios {
     private static resInterceptor() {
         this.axiosInstance.interceptors.response.use(
             (response) => {
-                const url = response.config.url;
-                if(url === '/login'){
-                    const headers = response.headers;
-                    if(headers && headers['Authorization']) {
-                        const token = headers['Authorization']
-                        localStorage.setItem('token', token);
-                    }
+                const headers = response.headers;
+                if(headers && headers['Authorization']) {
+                    const beforeToken = localStorage.getItem('token');
+                    const afterToken = headers['Authorization']
+                    if(beforeToken !== afterToken)
+                        localStorage.setItem('token', afterToken);
                 }
                 return response;
             }, 
