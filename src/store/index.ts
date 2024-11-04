@@ -19,9 +19,6 @@ const store: StoreOptions<RootStore> = {
     setLoading: function(state, isShow:boolean) {
       state.loading = isShow;
     },
-    initTodoItem: function(state, todoItemStr:string) {
-      state.storedTodoList.push(JSON.parse(todoItemStr));
-    },
     addTodoItem: function(state, todoItem:TodoVo) {
       state.storedTodoList.push(todoItem);
     },
@@ -38,6 +35,7 @@ const store: StoreOptions<RootStore> = {
     }
   },
   actions: {
+    // API 사용시 setTimeout -> axios로 변경
     addTodoItemAct: function({commit}, todoItem:TodoVo){
       commit('setLoading', true);
 
@@ -68,7 +66,7 @@ const store: StoreOptions<RootStore> = {
         commit('setLoading', false);
       }, 1000);
     },
-    searchTodoList: function({commit}) {
+    searchTodoListAct: function({commit}) {
       commit('setLoading', true);
 
       commit('delTodoList'); // 기존 리스트 비움

@@ -12,9 +12,8 @@ class LocalStorageUtil {
         localStorage.setItem(LocalStorageUtil.convertString(key), item);            
     }
 
-    static getItem(key:any): any {
-        const keyStr = LocalStorageUtil.convertString(key);
-        const item:any = localStorage.getItem(keyStr);
+    static getItem(key:string): any {
+        const item:any = localStorage.getItem(key);
 
         try{
             return JSON.parse(item);

@@ -34,10 +34,10 @@ export default class TodoHome extends Vue {
   @Mutation('toggleCompleteTodoItem') private toggleCompleteTodoItem!:(idx:number) => void
   @Action('addTodoItemAct') private addTodoItemAct!: (todoItem: TodoVo) => void
   @Action('delTodoItemAct') private delTodoItemAct!: (idx:number) => void
-  @Action('searchTodoList') private searchTodoList!: () => void
+  @Action('searchTodoListAct') private searchTodoListAct!: () => void
 
   created() {
-    this.searchTodoList();
+    this.searchTodoListAct();
   }
 
   private addTodoItem(todoItem: TodoVo) {
