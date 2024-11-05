@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'todo',
+    name: 'login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
   {
