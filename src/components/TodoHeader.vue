@@ -12,13 +12,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import RootBase from '@/views/common/RootBase';
 import Component from 'vue-class-component';
 
 @Component({
     name: 'TodoHeader'
 })
-export default class TodoHeader extends Vue {
+export default class TodoHeader extends RootBase {
     private menus:string[] = ['TODO', 'HOME', 'ABOUT'];
 
     private clickMenu(menu:string) {

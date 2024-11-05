@@ -13,19 +13,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { TodoVo } from '@/vo/TodoVo';
-import { Action, Mutation, State } from 'vuex-class';
+import TodoBase from '@/views/common/TodoBase';
 
 @Component({
     name: 'TodoList'
 })
-export default class TodoList extends Vue {
-    @State('storedTodoList') private storedTodoList!:TodoVo[];
-
-    @Mutation('toggleCompleteTodoItem') private toggleCompleteTodoItem!:(idx:number) => void
-    @Action('delTodoItemAct') private delTodoItemAct!: (idx:number) => void
+export default class TodoList extends TodoBase {
 
     private toggleComplete(index:number) {
       this.toggleCompleteTodoItem(index);

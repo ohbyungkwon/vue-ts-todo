@@ -5,16 +5,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import TodoBase from '@/views/common/TodoBase';
 import Component from 'vue-class-component';
-import { Action } from 'vuex-class';
 
 @Component({
     name: 'TodoFooter'
 })
-export default class TodoFooter extends Vue {
-    @Action('delTodoListAct') private delTodoListAct!:() => void
-
+export default class TodoFooter extends TodoBase {
     get isBtnShow() {
         return ['/todo', '/'].includes(this.$route.fullPath)
     }

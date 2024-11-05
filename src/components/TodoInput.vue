@@ -9,14 +9,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import { TodoVo } from '@/vo/TodoVo';
 import Component from 'vue-class-component';
 import _ from 'lodash';
-import { Action, Getter } from 'vuex-class';
 import StatusModal from './common/StatusModal.vue';
 import { ModalVo } from '@/vo/ModalVo';
 import { ResponseVo } from '@/vo/ResponseVo';
+import TodoBase from '@/views/common/TodoBase';
 
 @Component({
     name: 'TodoInput',
@@ -24,10 +23,7 @@ import { ResponseVo } from '@/vo/ResponseVo';
       StatusModal
     }
 })
-export default class TodoInput extends Vue {
-  @Getter('getTodoItemIdx') private getTodoItemIdx!:(text:string) => number;
-  @Action('addTodoItemAct') private addTodoItemAct!: (todoItem: TodoVo) => void
-  @Action('addTodoApiTest') private addTodoApiTest!: (todoItem: TodoVo) => any
+export default class TodoInput extends TodoBase {
 
   private newTodoItemForm:TodoVo = new TodoVo({ text: '', done: false });
   private modal:ModalVo = new ModalVo({});

@@ -10,9 +10,8 @@
 import Loading from '@/components/common/Loading.vue';
 import TodoInput from '@/components/TodoInput.vue';
 import TodoList from '@/components/TodoList.vue';
-import Vue from 'vue';
 import Component from 'vue-class-component'
-import { Action } from 'vuex-class';
+import TodoBase from './common/TodoBase';
 
 @Component({
     name: 'TodoHome',
@@ -22,12 +21,12 @@ import { Action } from 'vuex-class';
         Loading
     }
 })
-export default class TodoHome extends Vue {
-  @Action('searchTodoListAct') private searchTodoListAct!: () => void
+export default class TodoHome extends TodoBase {
 
   created() {
     this.searchTodoListAct();
   }
+
 }
 </script>
 
