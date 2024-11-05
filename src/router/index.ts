@@ -6,7 +6,8 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    redirect: '/todo'
+    name: 'todo',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
   },
   {
     path: '/todo',

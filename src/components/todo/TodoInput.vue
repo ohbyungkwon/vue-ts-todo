@@ -12,7 +12,7 @@
 import { TodoVo } from '@/vo/TodoVo';
 import Component from 'vue-class-component';
 import _ from 'lodash';
-import StatusModal from './common/StatusModal.vue';
+import StatusModal from '../common/StatusModal.vue';
 import { ModalVo } from '@/vo/ModalVo';
 import { ResponseVo } from '@/vo/ResponseVo';
 import TodoBase from '@/views/common/TodoBase';
@@ -52,6 +52,7 @@ export default class TodoInput extends TodoBase {
     this.clearInput();
   }
 
+  // API 사용 예시
   private async addTodoUsingApi() {
     let text = this.newTodoItemForm.text;
     if(text === '') {
@@ -71,7 +72,9 @@ export default class TodoInput extends TodoBase {
     console.log("Add TodoItem: ", newTodoItem);
 
     const result:ResponseVo = await this.addTodoApiTest(newTodoItem);
-    this.modal = new ModalVo({ status: result.status, content: result.message});
+    this.modal = new ModalVo({ status: result.status, content: result.message, callback: () => {
+      if(result.code === 200) this.searchTodoApiTest()
+    }});
     (this.$refs.modalRef as any).open();
       
     this.clearInput();

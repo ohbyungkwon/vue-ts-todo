@@ -8,8 +8,8 @@
 
 <script lang="ts">
 import Loading from '@/components/common/Loading.vue';
-import TodoInput from '@/components/TodoInput.vue';
-import TodoList from '@/components/TodoList.vue';
+import TodoInput from '@/components/todo/TodoInput.vue';
+import TodoList from '@/components/todo/TodoList.vue';
 import Component from 'vue-class-component'
 import TodoBase from './common/TodoBase';
 

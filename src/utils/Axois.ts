@@ -57,7 +57,7 @@ export default class Axios {
         );
     }
 
-    public static async get(url: string, requestParam: any, callback?: (result: any) => void | null) {
+    public static async get(url: string, requestParam?: any, callback?: (result: any) => void | null) {
         return await this.request('GET', url, {params: requestParam}, callback);
     }
 

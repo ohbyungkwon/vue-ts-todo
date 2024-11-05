@@ -15,11 +15,13 @@ export default class TodoBase extends RootBase {
     @Mutation('toggleCompleteTodoItem', { namespace: StoreNamespace.TODO }) protected toggleCompleteTodoItem!:(idx:number) => void
 
     @Action('addTodoItemAct', { namespace: StoreNamespace.TODO }) protected addTodoItemAct!: (todoItem: TodoVo) => void
-    @Action('addTodoApiTest', { namespace: StoreNamespace.TODO }) protected addTodoApiTest!: (todoItem: TodoVo) => any
     @Action('delTodoItemAct', { namespace: StoreNamespace.TODO }) protected delTodoItemAct!: (idx:number) => void
     
     @Action('delTodoListAct', { namespace: StoreNamespace.TODO }) protected delTodoListAct!:() => void
     @Action('searchTodoListAct', { namespace: StoreNamespace.TODO }) protected searchTodoListAct!: () => void
+
+    @Action('addTodoApiTest', { namespace: StoreNamespace.TODO }) protected addTodoApiTest!: (todoItem: TodoVo) => any
+    @Action('searchTodoApiTest', { namespace: StoreNamespace.TODO }) protected searchTodoApiTest!: () => any
 
     @Getter('getTodoItemIdx', { namespace: StoreNamespace.TODO }) protected getTodoItemIdx!:(text:string) => number;
 

@@ -23,7 +23,7 @@ export default class StatusModal extends Vue {
     @Prop({ type: ModalVo, required: true }) private readonly vo!:ModalVo;
 
     private isModalShow:boolean = false;
- 
+
     get statusClass() {
         switch (this.vo.status) {
         case 'error':
@@ -53,6 +53,10 @@ export default class StatusModal extends Vue {
 
     public close() {
         this.isModalShow = false;
+        if(this.vo.callback)
+          this.vo.callback();
+        
+        this.vo.callback = undefined;
         this.$emit('close')
     }
 }

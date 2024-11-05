@@ -9,8 +9,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import TodoHeader from './components/TodoHeader.vue';
-import TodoFooter from './components/TodoFooter.vue';
+import TodoHeader from './components/common/Header.vue';
+import TodoFooter from './components/todo/TodoFooter.vue';
 
 @Component({
   name: 'App',

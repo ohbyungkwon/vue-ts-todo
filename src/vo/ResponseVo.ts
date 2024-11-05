@@ -1,8 +1,8 @@
-export class ResponseVo {
+export class ResponseVo<T = any> {
   public code:number = 200;
   public status:string = "";
   public message:string = "";
-  public body?:Object = undefined;
+  public body?:T = undefined;
     
   constructor(data:any) {
     this.code = data.code;

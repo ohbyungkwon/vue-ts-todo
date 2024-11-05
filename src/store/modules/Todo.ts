@@ -81,12 +81,22 @@ const Todo: Module<TodoStore, RootStore>= {
                 }, 500);
             });
         },
+        // API 사용 예시
         addTodoApiTest: async function({commit}, reqBody) {
             commit('setLoading', true,  { root: true });
     
             const response:ResponseVo = await Axios.post('/todo', reqBody);
-            commit('addTodoItem', response.body);           
+            commit('setLoading', false,  { root: true });
+            return response;
+        },
+        searchTodoApiTest: async function({commit}) {
+            commit('setLoading', true,  { root: true });
+    
+            const response:ResponseVo<TodoVo[]> = await Axios.get('/todo');
+            const todoList = response.body;
+            todoList?.forEach(item => commit('addTodoItem', item))
             
+            commit('setLoading', false,  { root: true });
             return response;
         }
     },
