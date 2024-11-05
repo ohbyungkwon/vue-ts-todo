@@ -1,3 +1,4 @@
+import { ResponseVo } from '@/vo/ResponseVo';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios';
 
 export default class Axios {
@@ -85,12 +86,13 @@ export default class Axios {
 
             if(callback) callback(response);
         } catch(error) {
-            if (axios.isAxiosError(error)) {
-                throw error;
+            if (!axios.isAxiosError(error)) {
+                return new ResponseVo({ status: '오류', message: 'An unexpected error occurred', code: 500 } );
             }
-            throw new Error('An unexpected error occurred');
+
+            response = error.response;
         }
 
-        return response;
+        return new ResponseVo(response?.data);
     }
 } 
