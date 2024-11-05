@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
     <h2>로그인</h2>
-        <form @submit.prevent="doLogin">
+        <form @submit.prevent="loginClick">
             <div class="form-group">
                 <label for="userId">아이디</label>
                 <input
@@ -24,21 +24,39 @@
             </div>
             <button type="submit">로그인</button>
         </form>
+        <status-modal ref="modalRef" :vo="modal"></status-modal>
     </div>
 </template>
 
 <script lang="ts">
+import StatusModal from '@/components/common/StatusModal.vue';
 import RootBase from '@/views/common/RootBase';
+import { ModalVo } from '@/vo/ModalVo';
+import { ResponseVo } from '@/vo/ResponseVo';
+import { UserInfoVo } from '@/vo/UserInfoVo';
 import Component from 'vue-class-component';
+import { Action } from 'vuex-class';
 
 @Component({
-    name: 'Login'
+    name: 'Login',
+    components: {
+      StatusModal
+    }
 })
 export default class Login extends RootBase {
   private userId:string = "";
   private password:string = "";
+  private modal:ModalVo = new ModalVo({});
 
+  @Action('doLogin') private doLogin!:(loginVo:{}) => any;
 
+  private async loginClick() {
+    const response:ResponseVo<UserInfoVo> = await this.doLogin({'userId': this.userId, 'password': this.password})
+
+    const handleModalCallback = () => { this.$router.push('/todo')};
+    this.modal = new ModalVo({ status: response.status, content: response.message, callback: handleModalCallback});
+    (this.$refs.modalRef as any).open();    
+  }
 }
 </script>
 

@@ -66,15 +66,19 @@ export default class TodoInput extends TodoBase {
       this.modal = new ModalVo({ status: 'error', content: '이미 존재하는 값입니다.'});
       (this.$refs.modalRef as any).open();
       return;
-    }
-    
-    const newTodoItem = _.cloneDeep(this.newTodoItemForm);
-    console.log("Add TodoItem: ", newTodoItem);
+    } 
 
+    const newTodoItem = _.cloneDeep(this.newTodoItemForm);
     const result:ResponseVo = await this.addTodoApiTest(newTodoItem);
-    this.modal = new ModalVo({ status: result.status, content: result.message, callback: () => {
-      if(result.code === 200) this.searchTodoApiTest()
-    }});
+    const handleModalCallback = async () => {
+      if (result.code === 200) await this.searchTodoApiTest();
+    };
+    
+    this.modal = new ModalVo({ 
+      status: result.status, 
+      content: result.message, 
+      callback: handleModalCallback 
+    });    
     (this.$refs.modalRef as any).open();
       
     this.clearInput();
