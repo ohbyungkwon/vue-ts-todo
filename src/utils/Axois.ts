@@ -27,7 +27,7 @@ export default class Axios {
             (config) => {
                 const url = config.url;
                 if(url !== '/login') {
-                    config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+                    config.headers['Authorization'] = localStorage.getItem('token');
                 }
 
                 config.withCredentials = true;
@@ -43,15 +43,18 @@ export default class Axios {
         this.axiosInstance.interceptors.response.use(
             (response) => {
                 const headers = response.headers;
-                if(headers && headers['Authorization']) {
+                if(headers && headers['authorization']) {
                     const beforeToken = localStorage.getItem('token');
-                    const afterToken = headers['Authorization']
+                    const afterToken = headers['authorization']
+                    console.log(afterToken)
                     if(beforeToken !== afterToken)
                         localStorage.setItem('token', afterToken);
                 }
+                console.log(response)
                 return response;
             }, 
             (error) => {
+                console.log(error)
                 return Promise.reject(error);
             }
         );

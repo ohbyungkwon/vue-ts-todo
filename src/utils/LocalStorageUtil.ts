@@ -47,6 +47,7 @@ export default class LocalStorageUtil {
         const size = localStorage.length;
         for(let i = 0; i < size; i++) {
             const key = localStorage.key(i);
+            if(key === 'token') continue;
             if(key === null) {
                 alert('조회 중 문제가 발생했습니다.');
                 break;
