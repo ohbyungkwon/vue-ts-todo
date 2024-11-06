@@ -1,4 +1,5 @@
 export class ModalVo {
+    public code:number = 500;
     public status:string = "error";
     public title:string = "오류";
     public content:string = "알 수 없는 오류가 발생했습니다.";
@@ -7,7 +8,23 @@ export class ModalVo {
     constructor(data:any) {
         if(!data) return;
 
-        if(data.status) this.status = data.status;
+        // code가 우선순위를 갖고 code를 정의하지 않으면 status를 확인
+        if(data.code) {
+            this.code = data.code;
+            const type:number = Math.floor(this.code / 100);
+            if(type === 2) 
+                this.status = 'notice';
+            else if(type === 4)
+                this.status = 'error';
+            else if(type === 5)
+                this.status = 'error';
+            else 
+                this.status = 'notice';
+            console.log(type, this.status);
+        } else {
+            this.code = 200;
+            if(data.status) this.status = data.status;
+        }
         if(data.title) this.title = data.title;
         if(data.content) this.content = data.content;
         if(data.btnMsg) this.btnMsg = data.btnMsg;

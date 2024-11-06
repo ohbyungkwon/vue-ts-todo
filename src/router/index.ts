@@ -1,3 +1,4 @@
+import eventBus from '@/EventBus'
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
@@ -30,6 +31,17 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.afterEach((to) => {
+  console.log(to);
+  if(to.name === 'login') {
+    eventBus.emit('headerEvent', false)
+    eventBus.emit('footerEvent', false)
+  } else {
+    eventBus.emit('headerEvent', true)
+    eventBus.emit('footerEvent', true)
+  }
 })
 
 export default router

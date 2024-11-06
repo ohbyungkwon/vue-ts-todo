@@ -83,16 +83,21 @@ export default class Axios {
             };
 
             response = await this.axiosInstance.request(config);
-
+            console.log("1. " + response);
             if(callback) callback(response);
         } catch(error) {
             if (!axios.isAxiosError(error)) {
-                return new ResponseVo({ status: '오류', message: 'An unexpected error occurred', code: 500 } );
+                return new ResponseVo( { code: 500, resultMsg: 'An unexpected error occurred' } );
             }
 
             response = error.response;
+            console.log("2. " + response);
         }
 
-        return new ResponseVo(response?.data);
+        return new ResponseVo({ 
+            code: response?.status, 
+            resultMsg: response?.data.resultMsg, 
+            resultObj: response?.data.resultObj 
+        });
     }
 } 

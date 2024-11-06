@@ -75,8 +75,8 @@ export default class TodoInput extends TodoBase {
     };
     
     this.modal = new ModalVo({ 
-      status: result.status, 
-      content: result.message, 
+      code: result.code, 
+      content: result.resultMsg, 
       callback: handleModalCallback 
     });    
     (this.$refs.modalRef as any).open();

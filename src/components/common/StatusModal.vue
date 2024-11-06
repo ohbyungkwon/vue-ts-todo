@@ -2,9 +2,9 @@
     <!-- 모달 배경 -->
     <div v-if="isModalShow" class="modal-background">
         <!-- 모달 본문 -->
-        <div :class="['modal', statusClass]">
+        <div :class="['modal', getStatusClass]">
             <span class="close-btn" @click="close">&times;</span>
-            <h2>{{ title }}</h2>
+            <h2>{{ getTitle }}</h2>
             <p>{{ vo.content }}</p>
             <button @click="close">{{ vo.btnMsg }}</button>
         </div>
@@ -24,7 +24,7 @@ export default class StatusModal extends Vue {
 
     private isModalShow:boolean = false;
 
-    get statusClass() {
+    get getStatusClass() {
         switch (this.vo.status) {
         case 'error':
             return 'modal-error';
@@ -35,7 +35,7 @@ export default class StatusModal extends Vue {
         }
     }
 
-    get title() {
+    get getTitle() {
         switch (this.vo.status) {
         case 'error':
             return '오류';

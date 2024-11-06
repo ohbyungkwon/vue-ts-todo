@@ -21,11 +21,12 @@ const Login:Module<LoginStore, RootStore> = {
     },
     actions: {
         doLogin: async function({commit}, loginVo) {
+            commit('setLoading', true,  { root: true });
             const response:ResponseVo<UserInfoVo> = await Axios.post(ApiPathNamespace.LOGIN, loginVo)
-            if(response.code === 200) {
-                const payload = response.body;
-                commit('setUserInfo', payload);
-            }
+            console.log(response)
+            const payload = response.resultObj;
+            commit('setUserInfo', payload);
+            commit('setLoading', false,  { root: true });
             return response;
         }  
     }

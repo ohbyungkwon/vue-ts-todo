@@ -93,7 +93,7 @@ const Todo: Module<TodoStore, RootStore>= {
             commit('setLoading', true,  { root: true });
     
             const response:ResponseVo<TodoVo[]> = await Axios.get('/todo');
-            const todoList = response.body;
+            const todoList = response.resultObj;
             todoList?.forEach(item => commit('addTodoItem', item))
             
             commit('setLoading', false,  { root: true });
