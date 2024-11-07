@@ -12,20 +12,21 @@ export interface LoginStore {
 const Login:Module<LoginStore, RootStore> = {
     namespaced: true,
     state: {
-        userInfo: new UserInfoVo({})
+        userInfo: Object()
     },
     mutations: {
-        setUserInfo: function(state, payload:UserInfoVo) {
-            state.userInfo = payload;
+        setUserInfo: function(state, payload:any) {
+            state.userInfo = new UserInfoVo(payload);
         }
     },
     actions: {
         doLogin: async function({commit}, loginVo) {
             commit('setLoading', true,  { root: true });
-            const response:ResponseVo<UserInfoVo> = await Axios.post(ApiPathNamespace.LOGIN, loginVo)
-            console.log(response)
+
+            const response:ResponseVo<UserInfoVo> = await Axios.post(ApiPathNamespace.LOGIN, loginVo)            
             const payload = response.resultObj;
             commit('setUserInfo', payload);
+
             commit('setLoading', false,  { root: true });
             return response;
         }  

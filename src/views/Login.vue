@@ -22,35 +22,35 @@
         />
     </div>
     <button @click="loginClick">로그인</button>
-    <status-modal ref="modalRef" :vo="modal"></status-modal>
   </div>
 </template>
 
 <script lang="ts">
-import StatusModal from '@/components/common/StatusModal.vue';
+import eventBus from '@/EventBus';
 import RootBase from '@/views/common/RootBase';
-import { ModalVo } from '@/vo/ModalVo';
 import { ResponseVo } from '@/vo/ResponseVo';
 import { UserInfoVo } from '@/vo/UserInfoVo';
 import Component from 'vue-class-component';
 
 @Component({
     name: 'Login',
-    components: {
-      StatusModal
-    }
 })
 export default class Login extends RootBase {
   private userId:string = "";
   private password:string = "";
-  private modal:ModalVo = new ModalVo({});
   
   private async loginClick() {
     const response:ResponseVo<UserInfoVo> = await this.doLogin({userId: this.userId, password: this.password})
 
-    const handleModalCallback = () => { if(response.code === 200) this.$router.push('/todo')};
-    this.modal = new ModalVo({ code: response.code, content: response.resultMsg, callback: handleModalCallback});
-    (this.$refs.modalRef as any).open();    
+    const handleModalCallback = () => { 
+      if(response.code === 200) this.$router.push('/todo')
+      else {
+        this.userId = '';
+        this.password = '';
+      }
+    };
+
+    eventBus.emit('modalEvent', { code: response.code, content: response.resultMsg, callback: handleModalCallback});
   }
 }
 </script>

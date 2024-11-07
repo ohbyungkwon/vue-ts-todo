@@ -2,7 +2,7 @@ import { StoreNamespace } from "@/enums/StoreNamespace";
 import Login from "@/store/modules/Login";
 import Vue from "vue"
 import Component from "vue-class-component";
-import { Action, Mutation } from "vuex-class";
+import { Action, Mutation, State } from "vuex-class";
 
 @Component({
     name: 'RootBase'
@@ -10,6 +10,7 @@ import { Action, Mutation } from "vuex-class";
 export default class RootBase extends Vue {
     @Mutation('setLoading') protected setLoading!: (isShowLoading: boolean) => void;
 
+    @State('userInfo', { namespace: StoreNamespace.LOGIN }) protected userInfo?:{};
     @Action('doLogin', { namespace: StoreNamespace.LOGIN }) protected doLogin!:(loginVo:{}) => any;
   
     beforeCreate(){

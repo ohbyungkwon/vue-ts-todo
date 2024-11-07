@@ -27,7 +27,7 @@ import { ModalVo } from './vo/ModalVo';
 export default class App extends Vue {
   private isShowHeader:boolean = false;
   private isShowFooter:boolean = false;
-  private modal:ModalVo = new ModalVo({});
+  private modal?:ModalVo = new ModalVo({});
 
   mounted() {
     eventBus.on('headerEvent', this.globalHeaderHandler);
@@ -44,7 +44,7 @@ export default class App extends Vue {
   }
 
   private globalModalHandler(data: any) {
-    this.modal = data;
+    this.modal = new ModalVo(data);    
     (this.$refs.globalModal as any).open();
   }
 

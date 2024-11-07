@@ -46,15 +46,12 @@ export default class Axios {
                 if(headers && headers['authorization']) {
                     const beforeToken = localStorage.getItem('token');
                     const afterToken = headers['authorization']
-                    console.log(afterToken)
                     if(beforeToken !== afterToken)
                         localStorage.setItem('token', afterToken);
                 }
-                console.log(response)
                 return response;
             }, 
             (error) => {
-                console.log(error)
                 return Promise.reject(error);
             }
         );
@@ -86,7 +83,6 @@ export default class Axios {
             };
 
             response = await this.axiosInstance.request(config);
-            console.log("1. " + response);
             if(callback) callback(response);
         } catch(error) {
             if (!axios.isAxiosError(error)) {
@@ -94,7 +90,6 @@ export default class Axios {
             }
 
             response = error.response;
-            console.log("2. " + response);
         }
 
         return new ResponseVo({ 

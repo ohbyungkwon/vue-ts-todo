@@ -20,9 +20,8 @@ export class ModalVo {
                 this.status = 'error';
             else 
                 this.status = 'notice';
-            console.log(type, this.status);
         } else {
-            this.code = 200;
+            this.code = 0;
             if(data.status) this.status = data.status;
         }
         if(data.title) this.title = data.title;

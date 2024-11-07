@@ -34,7 +34,6 @@ const router = new VueRouter({
 })
 
 router.afterEach((to) => {
-  console.log(to);
   if(to.name === 'login') {
     eventBus.emit('headerEvent', false)
     eventBus.emit('footerEvent', false)

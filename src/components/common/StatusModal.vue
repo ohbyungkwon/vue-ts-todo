@@ -47,7 +47,6 @@ export default class StatusModal extends Vue {
     }
 
     public open() {
-        console.log('open modal ', this.vo);
         this.isModalShow = true;
     }
 

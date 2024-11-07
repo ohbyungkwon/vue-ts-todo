@@ -1,17 +1,21 @@
 export class UserInfoVo {
     public userId:string = "";
-    public username:string = "";
+    public name:string = "";
+    public email:string = "";
+    public birth:string = "";
+    public age:number = 0;
     public address:string = "";
-    public zipCode:string = "";
-    public phone:string = "";
     public gender:string = "";
+    public role:string = "";
 
     constructor(data:any) {
         this.userId = data.userId;
-        this.username = data.username;
+        this.name = data.name;
+        this.email = data.email;
+        this.birth = data.birth;
+        this.age = data.age;
         this.address = data.address;
-        this.zipCode = data.zipCode;
-        this.phone = data.phone;
         this.gender = data.gender;
+        this.role = data.role;
     }
 }
