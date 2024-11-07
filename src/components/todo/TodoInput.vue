@@ -59,8 +59,10 @@ export default class TodoInput extends TodoBase {
     const newTodoItem = _.cloneDeep(this.newTodoItemForm);
     const result:ResponseVo = await this.addTodoApiTest(newTodoItem);
     const handleModalCallback = async () => {
-      if (result.code === 200) await this.searchTodoApiTest();
-      this.clearInput();
+      if (result.code === 200) {
+        await this.searchTodoApiTest();
+        this.clearInput();
+      } 
     };
   
     eventBus.emit('modalEvent', { 
