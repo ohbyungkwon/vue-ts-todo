@@ -41,10 +41,12 @@ export default class Login extends RootBase {
   
   private async loginClick() {
     const response:ResponseVo<UserInfoVo> = await this.doLogin({userId: this.userId, password: this.password})
-
+    
     const handleModalCallback = () => { 
-      if(response.code === 200) this.$router.push('/todo')
-      else {
+      if(response.code === 200) {
+        const nextPage = this.$route.query.beforePage ?? '/todo';
+        this.$router.push(nextPage.toString());
+      } else {
         this.userId = '';
         this.password = '';
       }
